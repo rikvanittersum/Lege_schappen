@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Lege schappen</title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static '/materialize.css' %}">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-wrapper">
+          <a href="/" class="brand-logo">Lege Schappen</a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            {% if user.is_authenticated %}
+            <li><a href="/my_tickets">Mijn tickets</a></li>
+            <li><a href="/buy_tickets">Koop tickets</a></li>
+            <li><a href="/logout">Uitloggen</a></li>
+            {% else %}
+              <li><a href="/buy_tickets">Supermarkten</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+
+      <ul class="sidenav" id="mobile-demo">
+        <li><a href="/register">Register</a></li>
+        <li><a href="/login">Log in</a></li>
+      </ul>
+
+      {% if messages%}
+        {%for message in messages %}
+          <script>M.toast({html:  "{{message}}", classes: 'blue rounded', displayLength:2000});</script>
+        {% endfor %}
+      {% endif %}
+
+      <div class="container">
+        <br>
+        {% block content %}
+        {% endblock %}
+      </div>
+
+</body>
+</html>
