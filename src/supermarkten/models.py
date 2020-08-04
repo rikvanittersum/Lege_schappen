@@ -10,6 +10,8 @@ class Supermarkt(models.Model):
 
 
     def product_is_uitverkocht(self, product):
+        if not product:
+            raise ValueError("Geen product opgegeven")
         self.uitverkochte_producten.append(product)
         self.save()
 

@@ -11,8 +11,15 @@ class SupermarktTestCase(TestCase):
         supermarkt.product_is_uitverkocht("salami")
         self.assertEqual(supermarkt.uitverkochte_producten[0], "salami")
 
+    def test_als_geen_product_wordt_meegeleverd_bij_uitverkocht_product_levert_dat_een_value_error_op(self):
+        supermarkt = Supermarkt.objects.get(bedrijf="ah")
+        with self.assertRaises(ValueError):
+            supermarkt.product_is_uitverkocht("")
+
     def test_een_product_dat_niet_meer_is_uitverkocht_kan_uit_de_lijst_worden_verwijderd(self):
         supermarkt = Supermarkt.objects.get(bedrijf="ah")
         supermarkt.product_is_uitverkocht("salami")
         supermarkt.product_is_niet_meer_uitverkocht("salami")
         self.assertListEqual(supermarkt.uitverkochte_producten, [])
+
+
