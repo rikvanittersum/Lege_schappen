@@ -16,6 +16,8 @@ class Supermarkt(models.Model):
         self.save()
 
     def product_is_niet_meer_uitverkocht(self, product):
+        if not product:
+            raise ValueError("Geen product opgegeven")
         self.uitverkochte_producten.remove(product)
 
 
