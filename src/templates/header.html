@@ -1,38 +1,28 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
     <meta charset="UTF-8">
     <title>Lege schappen</title>
-
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="{% static '/materialize.css' %}">
 </head>
 <body>
-
     <nav>
         <div class="nav-wrapper">
           <a href="/" class="brand-logo">Lege Schappen</a>
           <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
             {% if user.is_authenticated %}
-            <li><a href="/my_tickets">Mijn tickets</a></li>
-            <li><a href="/buy_tickets">Koop tickets</a></li>
+            <li><a href="/mijn_supermarkten">Mijn supermarkten</a></li>
+            <li><a href="/buy_tickets">Meld lege schappen</a></li>
             <li><a href="/logout">Uitloggen</a></li>
             {% else %}
-              <li><a href="/buy_tickets">Supermarkten</a></li>
+              <li><a href="/supermarkten">Supermarkten</a></li>
             {% endif %}
           </ul>
         </div>
-      </nav>
-
-      <ul class="sidenav" id="mobile-demo">
-        <li><a href="/register">Register</a></li>
-        <li><a href="/login">Log in</a></li>
-      </ul>
+    </nav>
 
       {% if messages%}
         {%for message in messages %}
@@ -42,9 +32,9 @@
 
       <div class="container">
         <br>
-        {% block content %}
-        {% endblock %}
+            {% block content %}
+            {% endblock %}
       </div>
-
-</body>
+        <script src="{% static '/main.js' %}"></script>
+    </body>
 </html>
