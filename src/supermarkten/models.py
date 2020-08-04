@@ -9,8 +9,11 @@ class Supermarkt(models.Model):
     uitverkochte_producten = ListTextField(base_field=models.CharField(max_length=100))
 
 
-    def set_uitverkochte_producten(self, product):
+    def product_is_uitverkocht(self, product):
         self.uitverkochte_producten.append(product)
         self.save()
+
+    def product_is_niet_meer_uitverkocht(self, product):
+        self.uitverkochte_producten.remove(product)
 
 
