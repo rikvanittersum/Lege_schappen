@@ -1,7 +1,43 @@
 {% extends "header.html" %}
 
 {% block content %}
-{% for supermarkt in supermarkten %}
-    {{ supermarkt.uitverkochte_producten }}
-{% endfor %}
+
+      <table id="app">
+        <thead>
+          <tr>
+              <th>Supermarkt</th>
+              <th>Adres</th>
+              <th>Plaats</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="supermarkt in supermarkten">
+            <td>[[ supermarkt.bedrijf ]]</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+        </tbody>
+      </table>
+
+<script type='text/javascript'>
+        var supermarkten = {{ supermarkten|safe }};
+</script>
+<script>
+    var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#app',
+      data: {
+          message: 'Hello Vue!',
+          supermarkten: supermarkten,
+      },
+      methods: {
+          greet: function(name) {
+              console.log('Hello from ' + name + '!')
+          }
+      }
+    });
+</script>
+
+
 {% endblock %}
