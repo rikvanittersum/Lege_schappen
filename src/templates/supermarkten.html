@@ -1,5 +1,4 @@
 {% extends "header.html" %}
-
 {% block content %}
 
       <table id="app">
@@ -11,12 +10,14 @@
           </tr>
         </thead>
 
-        <tbody>
-          <tr v-for="supermarkt in supermarkten">
-            <td>[[ supermarkt.bedrijf ]]</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
+        <tbody v-for="supermarkt in supermarkten">
+          <tr style= v-o"display:none;"n:click="greet()"  style="cursor:pointer">
+            <td >[[ supermarkt.bedrijf ]]</td>
+            <td>[[ supermarkt.adres ]]</td>
+            <td>[[ supermarkt.plaatsnaam ]]</td>
+            <td>[[ supermarkt.uitverkochte_producten ]]</td>
           </tr>
+        <tr v-for="product in greet(supermarkt.uitverkochte_producten)"><td><a>[[product]]</a></td></tr>
         </tbody>
       </table>
 
@@ -24,16 +25,18 @@
         var supermarkten = {{ supermarkten|safe }};
 </script>
 <script>
+    var joe = false;
     var app = new Vue({
       delimiters: ['[[', ']]'],
       el: '#app',
       data: {
-          message: 'Hello Vue!',
+          producten: supermarkten.uitverkochte_producten,
           supermarkten: supermarkten,
       },
       methods: {
-          greet: function(name) {
-              console.log('Hello from ' + name + '!')
+          greet: function(string) {
+
+               return string.split(",")
           }
       }
     });
