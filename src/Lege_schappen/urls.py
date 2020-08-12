@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from supermarkten.views import home_view, supermarkten_view
+from users.views import aanmelden_view, login_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
     path('mijn_supermarkten', home_view, name='mijn_supermarkten'),
-    path('supermarkten', supermarkten_view, name='supermarkten')
+    path('supermarkten', supermarkten_view, name='supermarkten'),
+    path('aanmelden', aanmelden_view, name='aanmelden'),
+    path('inloggen', login_view, name='inloggen'),
+    path('logout', logout_view, name='uitloggen'),
 ]
