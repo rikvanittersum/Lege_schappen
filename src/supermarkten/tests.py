@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import Supermarkt
+from .views import meeste_producten
 
 
 class SupermarktTestCase(TestCase):
@@ -27,6 +28,9 @@ class SupermarktTestCase(TestCase):
         supermarkt = Supermarkt.objects.get(bedrijf="ah")
         self.assertRaises(ValueError, supermarkt.product_is_niet_meer_uitverkocht, "")
 
-    def test_krij_supermarkt_met_meest_uitverkochte_producten(self):
+    def test_krijg_supermarkt_met_meest_uitverkochte_producten(self):
+        supermarkt_met_meest_uitverkochte_producten = meeste_producten(Supermarkt.objects.all())
+        self.assertEqual(supermarkt_met_meest_uitverkochte_producten, "c1000")
+
 
 
