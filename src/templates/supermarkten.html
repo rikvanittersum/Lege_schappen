@@ -9,9 +9,10 @@
               <th>Supermarkt</th>
               <th>Adres</th>
               <th>Plaats</th>
+              <th></th>
           </tr>
         </thead>
-      <tbody is="ok" v-for="supermarkt in supermarkten" :supermarkt="supermarkt" :key="supermarkt"></tbody>
+      <tbody is="supermarkt_uitverkochte_producten" v-for="supermarkt in supermarkten" :supermarkt="supermarkt" :key="supermarkt"></tbody>
   </table>
 </div>
 
@@ -22,19 +23,41 @@
 
 <script>
 
-  Vue.component('ok', {
+Vue.component('productenlijst', {
+  data(){ return{
+    isHidden: false,
+  }},
+  template: `
+    <p>
+      <label>
+        <input type="checkbox" />
+        <span>ananas</span>
+      </label>
+    </p>
+  `
+})
+
+  Vue.component('supermarkt_uitverkochte_producten', {
   props: ['supermarkt'],
   data(){ return{
     isHidden: false,
   }},
+        methods: {
+           naar_supermarkt: function() {
+               console.log("joe");
+          },
+      },
   {% verbatim %}
   template: `<tbody>
-  <tr style="cursor:pointer" v-on:click="isHidden = !isHidden" >
-    <td>{{ supermarkt.bedrijf }}</td>
-    <td>{{  supermarkt.adres }}</td>
-    <td>{{  supermarkt.plaatsnaam }}</td>
+  <tr style="cursor:pointer" >
+    <td v-on:click="isHidden = !isHidden" >{{ supermarkt.bedrijf }}</td>
+    <td v-on:click="isHidden = !isHidden" >{{  supermarkt.adres }}</td>
+    <td v-on:click="isHidden = !isHidden" >{{  supermarkt.plaatsnaam }}</td>
+    <td> <a class="btn-floating btn-large waves-effect waves-light red" v-on:click="naar_supermarkt"><i class="large material-icons">add</i></a></td>
   </tr>
+  <tr v-show="isHidden">Uitverkochten producten</tr>
   <tr v-show="isHidden" v-for='product in supermarkt.uitverkochte_producten.split(",")'><a>{{product}}</a></tr>
+  <productenlijst/>
   </tbody>
   `
   {% endverbatim %}
@@ -45,11 +68,6 @@
       data: {
           supermarkten: supermarkten,
       },
-      methods: {
-           greet: function(string) {
-               return string.split(",")
-          },
-      }
     });
 
 </script>

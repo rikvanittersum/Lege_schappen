@@ -1,6 +1,7 @@
 from django.db import models
 from django_mysql.models import ListTextField
 
+
 # Create your models here.
 class Supermarkt(models.Model):
     bedrijf                = models.TextField()
