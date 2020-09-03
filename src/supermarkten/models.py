@@ -1,24 +1,17 @@
 from django.db import models
-from django_mysql.models import ListTextField
 
-
-# Create your models here.
 class Supermarkt(models.Model):
+    supermarkt_id          = models.AutoField(primary_key=True, serialize=True)
     bedrijf                = models.TextField()
     adres                  = models.TextField()
     plaatsnaam             = models.TextField()
-    uitverkochte_producten = ListTextField(base_field=models.CharField(max_length=100))
 
 
-    def product_is_uitverkocht(self, product):
-        if not product:
-            raise ValueError("Geen product opgegeven")
-        self.uitverkochte_producten.append(product)
-        self.save()
+class Uitverkochte_product(models.Model):
+    naam          = models.TextField()
+    supermarkt_id = models.IntegerField()
+    datum         = models.DateTimeField()
 
-    def product_is_niet_meer_uitverkocht(self, product):
-        if not product:
-            raise ValueError("Geen product opgegeven")
-        self.uitverkochte_producten.remove(product)
+
 
 

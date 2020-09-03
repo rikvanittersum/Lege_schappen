@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from .models import Supermarkt
+from .models import Supermarkt, Uitverkochte_product
 import json
 from django.core import serializers
-from django.db.models import Max
+
 
 # Create your views here.
 def home_view(request, *args, **kwargs):
@@ -10,20 +10,16 @@ def home_view(request, *args, **kwargs):
 
 def supermarkten_view(request, *args, **kwargs):
     data = serializers.serialize('python', Supermarkt.objects.all())
+    for d in data:
+        d['fields']['pk'] = d['pk']
     objecten = [d['fields'] for d in data]
+    for item in objecten:
+        producten = serializers.serialize('python', Uitverkochte_product.objects.filter(supermarkt_id=item['pk']))
+        item['uitverkochte_producten'] = [p['fields']['naam'] for p in producten]
+
     joe = json.dumps(objecten)
-    max = meeste_producten(Supermarkt.objects.all())
-    print(max)
-    context = {"supermarkten": joe, "max": max}
+    print(joe)
+    context = {"supermarkten": joe}
     return render(request, 'supermarkten.html', context)
 
-def meeste_producten(supermarkten):
-    max_prod = 0
-    ssuper = ""
-    for supermarkt in supermarkten:
-        if len(supermarkt.uitverkochte_producten) > max_prod:
-            max_prod = len(supermarkt.uitverkochte_producten)
-            ssuper = supermarkt.bedrijf
-
-    return ssuper
 

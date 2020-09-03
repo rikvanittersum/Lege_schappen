@@ -24,16 +24,19 @@
 <script>
 
 Vue.component('productenlijst', {
-  data(){ return{
-    isHidden: false,
-  }},
-  template: `
-    <p>
+props: ['uitverkochte_producten'],
+    data(){return{
+    producten: ["pasta", "wc-papier", "corona-bier", "vlees", "rijst", "paracetamol", "alcohol", "knakworsten", "blikvoer"],
+    }},
+  template: `<div>
+    <p v-for="product in producten">
       <label>
         <input type="checkbox" />
-        <span>ananas</span>
+        {% verbatim %}
+        <span>{{product}}</span>
       </label>
     </p>
+    </div>
   `
 })
 
@@ -41,23 +44,25 @@ Vue.component('productenlijst', {
   props: ['supermarkt'],
   data(){ return{
     isHidden: false,
+    toonLijst: false,
+
   }},
         methods: {
            naar_supermarkt: function() {
                console.log("joe");
           },
       },
-  {% verbatim %}
+
   template: `<tbody>
   <tr style="cursor:pointer" >
     <td v-on:click="isHidden = !isHidden" >{{ supermarkt.bedrijf }}</td>
     <td v-on:click="isHidden = !isHidden" >{{  supermarkt.adres }}</td>
     <td v-on:click="isHidden = !isHidden" >{{  supermarkt.plaatsnaam }}</td>
-    <td> <a class="btn-floating btn-large waves-effect waves-light red" v-on:click="naar_supermarkt"><i class="large material-icons">add</i></a></td>
+    <td> <a class="btn-floating btn-large waves-effect waves-light red" v-on:click="toonLijst = !toonLijst"><i class="large material-icons">add</i></a></td>
   </tr>
   <tr v-show="isHidden">Uitverkochten producten</tr>
-  <tr v-show="isHidden" v-for='product in supermarkt.uitverkochte_producten.split(",")'><a>{{product}}</a></tr>
-  <productenlijst/>
+  <tr v-show="isHidden" v-for='product in supermarkt.uitverkochte_producten'><a>{{product}}</a></tr>
+  <productenlijst v-show="toonLijst" />
   </tbody>
   `
   {% endverbatim %}
