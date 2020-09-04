@@ -1,7 +1,6 @@
 {% extends "header.html" %}
 {% block content %}
 
-
 <div id="app">
   <table>
       <thead>
@@ -17,17 +16,24 @@
 </div>
 
 <script type='text/javascript'>
-        var supermarkten = {{ supermarkten|safe }};
-        var show = false;
+    var supermarkten = {{ supermarkten|safe }};
+    var show = false;
 </script>
 
 <script>
 
 Vue.component('productenlijst', {
 props: ['uitverkochte_producten'],
-    data(){return{
+    data(){
+    return{
     producten: ["pasta", "wc-papier", "corona-bier", "vlees", "rijst", "paracetamol", "alcohol", "knakworsten", "blikvoer"],
     }},
+
+     methods: {
+           toggle_producten_lijst: function() {
+               this.$parent.toonLijst = !this.$parent.toonLijst;
+          },
+      },
   template: `<div>
     <p v-for="product in producten">
       <label>
@@ -35,6 +41,12 @@ props: ['uitverkochte_producten'],
         {% verbatim %}
         <span>{{product}}</span>
       </label>
+    </p>
+    <p>
+        <a v-on:click="toggle_producten_lijst" class="waves-effect waves-teal btn-flat">Annuleren</a>
+        <button v-on:click="toggle_producten_lijst" class="btn waves-effect waves-light" type="submit" name="action">Opslaan
+            <i class="material-icons right">send</i>
+        </button>
     </p>
     </div>
   `
@@ -47,11 +59,6 @@ props: ['uitverkochte_producten'],
     toonLijst: false,
 
   }},
-        methods: {
-           naar_supermarkt: function() {
-               console.log("joe");
-          },
-      },
 
   template: `<tbody>
   <tr style="cursor:pointer" >
@@ -74,7 +81,6 @@ props: ['uitverkochte_producten'],
           supermarkten: supermarkten,
       },
     });
-
 </script>
 
 {% endblock %}

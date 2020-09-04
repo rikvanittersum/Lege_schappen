@@ -12,14 +12,16 @@ def supermarkten_view(request, *args, **kwargs):
     data = serializers.serialize('python', Supermarkt.objects.all())
     for d in data:
         d['fields']['pk'] = d['pk']
+
     objecten = [d['fields'] for d in data]
+
     for item in objecten:
         producten = serializers.serialize('python', Uitverkochte_product.objects.filter(supermarkt_id=item['pk']))
         item['uitverkochte_producten'] = [p['fields']['naam'] for p in producten]
 
     joe = json.dumps(objecten)
-    print(joe)
     context = {"supermarkten": joe}
+
     return render(request, 'supermarkten.html', context)
 
 
